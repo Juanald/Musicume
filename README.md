@@ -9,3 +9,10 @@ The app is implemented in Java, making use of OOP principles such as abstraction
 Future developments on this project include a text to speech component to read a given audiobook to the user, as well as integrating Spotify API to play actual songs in audio form to the user.
 
 ## Installation
+
+1. Ensure you have the [Java Development Kit](https://www.oracle.com/java/technologies/downloads/)(JDK) - Java 8 or later installed
+2. Clone the repository with the following code:
+   `git clone`
+3. Navigate to the Project Directory
+4. Compile Java Code
+5. Run the Program in terminal using
