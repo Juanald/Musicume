@@ -16,5 +16,19 @@ Future developments on this project include a text to speech component to read a
    git clone https://github.com/Juanald/Text-Based-Music-App.git
    ```
 3. Navigate to the Project Directory
+
+```
+cd text-based-music-app
+```
+
 4. Compile Java Code
+
+```
+javac *.java
+```
+
 5. Run the Program in terminal using
+
+```
+java MyAudioUI
+```
