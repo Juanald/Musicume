@@ -12,9 +12,11 @@ Future developments on this project include a text to speech component to read a
 
 1. Ensure you have the [Java Development Kit](https://www.oracle.com/java/technologies/downloads/)(JDK) - Java 8 or later installed
 2. Fork the repository and clone it with the following code:
-   ```
-   git clone https://github.com/Juanald/Text-Based-Music-App.git
-   ```
+
+```
+git clone https://github.com/Juanald/Text-Based-Music-App.git
+```
+
 3. Navigate to the Project Directory
 
 ```
