@@ -1,9 +1,10 @@
 // Name: Gavin Dhaliwal
 
 /*
- * A Song is a type of AudioContent. A Song has extra fields such as Artist (person(s) singing the song) and composer 
+ * A Song is a type of AudioContent. A Song has extra fields artist, composer, genre, and lyrics
  */
-public class Song extends AudioContent implements Comparable<Song>// implement the Comparable interface
+
+public class Song extends AudioContent implements Comparable<Song>
 {
 	public static final String TYPENAME =	"SONG";
 	
@@ -18,8 +19,6 @@ public class Song extends AudioContent implements Comparable<Song>// implement t
 	public Song(String title, int year, String id, String type, String audioFile, int length, String artist,
 			String composer, Song.Genre genre, String lyrics)
 	{
-		// Make use of the constructor in the super class AudioContent. 
-		// Initialize additional Song instance variables. 
 		super(title, year, id, type, audioFile, length);
 		this.artist = artist;
 		this.composer = composer;
@@ -32,8 +31,7 @@ public class Song extends AudioContent implements Comparable<Song>// implement t
 		return TYPENAME;
 	}
 	
-	// Print information about the song. First print the basic information of the AudioContent 
-	// by making use of the printInfo() method in superclass AudioContent and then print artist, composer, genre 
+	// Print information about the song. First printing the basic information of the AudioContent 
 	public void printInfo()
 	{
 		super.printInfo();
@@ -85,7 +83,6 @@ public class Song extends AudioContent implements Comparable<Song>// implement t
 	}	
 	
 	// Two songs are equal if their AudioContent information is equal and both the composer and artists are the same
-	// Make use of the superclass equals() method
 	public boolean equals(Object other) // FIX
 	{
 		Song otherA = (Song) other;
@@ -95,11 +92,7 @@ public class Song extends AudioContent implements Comparable<Song>// implement t
 		return false;
 	}
 	
-	// Implement the Comparable interface 
-	// Compare two songs based on their title
-	// This method will allow songs to be sorted alphabetically
-	// Less than zero returned if x < y
-	// More than 0 if x > y. ASCII numerical values (a < b)
+	// This method will allow songs to be sorted alphabetically, implements the comparable interface
 	public int compareTo(Song other)
 	{
 		return this.getTitle().compareToIgnoreCase(other.getTitle()); // Implementing compareTo() method for use in library

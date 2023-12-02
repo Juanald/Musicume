@@ -55,8 +55,7 @@ public class MyAudioUI
 				{
 					mylibrary.listAllPlaylists(); 
 				}
-				// Download audiocontent (song/audiobook/podcast) from the store 
-				// Specify the index of the content
+				// Download audiocontent (song/audiobook/podcast) from the store at a specific index
 				else if (action.equalsIgnoreCase("DOWNLOAD")) 
 				{
 					int fromIndex = 0;
@@ -73,7 +72,6 @@ public class MyAudioUI
 						scanner.nextLine();
 					}
 					
-					// Fix formatting and errors
 					for (int i = fromIndex; i <= toIndex; i++) {
 						try {
 							AudioContent content = store.getContent(i);
@@ -93,7 +91,7 @@ public class MyAudioUI
 					if (scanner.hasNext()) {
 						artist = scanner.nextLine();
 					}
-					ArrayList<Integer> artistIndices = mylibrary.downloada(artist);
+					ArrayList<Integer> artistIndices = mylibrary.downloada(artist); // We get the indices of all content for a specific artist, and can download all data individually
 					for (int i = 0; i < artistIndices.size(); i++) {
 						try {
 							AudioContent content = store.getContent(artistIndices.get(i)+1);
@@ -106,6 +104,7 @@ public class MyAudioUI
 				}
 				
 				else if (action.equalsIgnoreCase("DOWNLOADG") ) {
+					// Works same as downloada, but with downloadg(genre) returning all indices of a specific genre
 					String genre = "";
 					System.out.print("Genre: ");
 					if (scanner.hasNext()) {
@@ -125,8 +124,7 @@ public class MyAudioUI
 					}
 				}
 				
-				// Get the *library* index (index of a song based on the songs list)
-				// of a song from the keyboard and play the song 
+				// Get the *library* index (index of a song based on the songs list), and play the song
 				else if (action.equalsIgnoreCase("PLAYSONG"))
 				{
 					int index = 0;
@@ -142,9 +140,7 @@ public class MyAudioUI
 						System.out.println(e.getMessage());
 					}
 				}
-				// Print the table of contents (TOC) of an audiobook that
-				// has been downloaded to the library. Get the desired book index
-				// from the keyboard - the index is based on the list of books in the library
+				// Print the table of contents (TOC) of an audiobook that has been downloaded
 				else if (action.equalsIgnoreCase("BOOKTOC")) 
 				{
 					int audioBookIndex = 0;
@@ -207,7 +203,6 @@ public class MyAudioUI
 				// Specify a playlist title (string) 
 				// Read the index of a song/audiobook/podcast in the playist from the keyboard 
 				// Play all the audio content 
-				// see class Library for the method to call
 				else if (action.equalsIgnoreCase("PLAYPL")) 
 				{
 					int index = 0;
@@ -236,7 +231,6 @@ public class MyAudioUI
 				}
 				// Delete a song from the list of songs in mylibrary and any play lists it belongs to
 				// Read a song index from the keyboard
-				// see class Library for the method to call
 				else if (action.equalsIgnoreCase("DELSONG")) 
 				{
 					int index = 0;
@@ -254,7 +248,6 @@ public class MyAudioUI
 					}
 				}
 				// Read a title string from the keyboard and make a playlist
-				// see class Library for the method to call
 				else if (action.equalsIgnoreCase("MAKEPL")) 
 				{
 					String title = "";
@@ -273,8 +266,7 @@ public class MyAudioUI
 				}
 				// Print the content information (songs, audiobooks, podcasts) in the playlist
 				// Read a playlist title string from the keyboard
-			  // see class Library for the method to call
-				else if (action.equalsIgnoreCase("PRINTPL"))	// print playlist content
+				else if (action.equalsIgnoreCase("PRINTPL"))	
 				{
 					String title = "";
 					System.out.print("Playlist Title: ");
@@ -292,9 +284,6 @@ public class MyAudioUI
 					}
 				}
 				// Add content (song, audiobook, podcast) from mylibrary (via index) to a playlist
-				// Read the playlist title, the type of content ("song" "audiobook" "podcast")
-				// and the index of the content (based on song list, audiobook list etc) from the keyboard
-			  // see class Library for the method to call
 				else if (action.equalsIgnoreCase("ADDTOPL")) 
 				{
 					String title = "";
@@ -325,8 +314,6 @@ public class MyAudioUI
 					}
 				}
 				// Delete content from play list based on index from the playlist
-				// Read the playlist title string and the playlist index
-			  // see class Library for the method to call
 				else if (action.equalsIgnoreCase("DELFROMPL")) 
 				{
 					int index = 0;

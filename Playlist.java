@@ -41,12 +41,7 @@ public class Playlist
 		this.contents = contents;
 	}
 	
-	/*
-	 * Print the information of each audio content object (song, audiobook, podcast)
-	 * in the contents array list. Print the index of the audio content object first
-	 * followed by ". " then make use of the printInfo() method of each audio content object
-	 * Make sure the index starts at 1
-	 */
+	// Prints all contents of a given playlist, knowing that the playlist may have songs and audiobooks
 	public void printContents()
 	{
 		int index = 0;
@@ -90,12 +85,11 @@ public class Playlist
 		}
 	}
 	
-	// Play the specific AudioContent from the contents array list.
-	// First make sure the index is in the correct range. 
+	// Play the specific AudioContent from the contents array list, making sure index is bounded
 	public void play(int index)
 	{
-		if (index >= 0 && index < contents.size()) { // Check if valid index
-			contents.get(index).play();  // Play the content at that specific index
+		if (index >= 0 && index < contents.size()) { 
+			contents.get(index).play();  
 		}
 	}
 	
@@ -114,10 +108,7 @@ public class Playlist
 		return false;
 	}
 	
-	// Given an index of an audio content object in contents array list,
-	// remove the audio content object from the array list
-	// Hint: use the contains() method above to check if the index is valid
-	// The given index is 1-indexed so convert to 0-indexing before removing
+	// Deletes content from a playlist at a given index
 	public void deleteContent(int index)
 	{
 		if (!contains(index)) return;

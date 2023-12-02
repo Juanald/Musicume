@@ -18,6 +18,7 @@ public class AudioContentStore
 		public static Map<String, ArrayList<Integer>> artistMap;
 		public static Map<String, ArrayList<Integer>> songGenreMap;
 		
+		// The constructor method scrapes store.txt, storing data in Song and AudioBook objects
 		public AudioContentStore() throws FileNotFoundException
 		{
 			contents = new ArrayList<AudioContent>();
@@ -29,42 +30,26 @@ public class AudioContentStore
 				System.exit(1);
 			}
 			
-			titleMap = new HashMap<String, Integer>(); // Populating the titleMap
+			// initializing a map for search by title functionality
+			titleMap = new HashMap<String, Integer>(); 
 			for (int i = 0; i < contents.size(); i++) {
 				titleMap.put(contents.get(i).getTitle(), i); // Every title is a key to the value of that title's index
 			}
 			
-			// map all the authors/artists to the indices of their works
+			// map of all the authors/artists to the indices of their works
 			artistMap = new HashMap<String, ArrayList<Integer>>();
-			/*
-			 for each piece of content
-			 		create a new indexArrayList
-			 		if a song
-			 			get song
-			 			get artist
-			 			compare to all other songs
-			 				!artist in artist map && this artist equals next artist
-			 					add index to arraylist
-			 			put artist to map
-			 		if an audiobook
-			 			get book
-			 			get author
-			 			compare to all other books
-			 				!author in artistmap && this author equals next author
-			 					add index to arraylist
-			 			put author to map
-			 */
 			for (int i = 0; i < contents.size(); i++) {
 				ArrayList<Integer> indexArrayList = new ArrayList<Integer>();
 				AudioContent current = contents.get(i); // Get the content
 				switch (current.getType()) {
-				case Song.TYPENAME: 
+				case Song.TYPENAME:  // Check if current content is a song
 					try {
 						Song currentSong = (Song) current;
 						String currentArtist = currentSong.getArtist();
 						if (artistMap.containsKey(currentArtist)) { // If artist already in map, break to next.
 							break;
 						}
+
 						indexArrayList.add(i); // Else add index of this artist to the created arraylist
 						for (int j = i+1; j < contents.size(); j++) { // Used to compare this artist with the rest of the artists. Add to indices arraylist if same artist.
 							Song nextSong = (Song) contents.get(j);
@@ -73,6 +58,7 @@ public class AudioContentStore
 								indexArrayList.add(j);
 							}
 						}
+						// by the end of this code, we have all the indices of the songs for a given artist, we can now map this artist to an ArrayList of their songs
 						artistMap.put(currentArtist, indexArrayList); // Add to map
 					}
 					catch (Exception e) {
@@ -80,7 +66,7 @@ public class AudioContentStore
 						artistMap.put(song.getArtist(), indexArrayList); // If exception raised(loop accesses an audiobook), means end of applicable list, map the values.
 					}
 					break;
-				case AudioBook.TYPENAME:
+				case AudioBook.TYPENAME: // Same process with AudioBooks as with Songs
 					try {
 						AudioBook currentBook = (AudioBook) current;
 						String currentAuthor = currentBook.getAuthor();
@@ -95,7 +81,7 @@ public class AudioContentStore
 								indexArrayList.add(j); // Add index of whatever works have the same author
 							}
 						}
-						artistMap.put(currentAuthor, indexArrayList); // map it
+						artistMap.put(currentAuthor, indexArrayList); // Map author to ArrayList of indices of their works in contents ArrayList
 					}
 					catch (Exception e) {
 						AudioBook book = (AudioBook) current;
@@ -106,10 +92,10 @@ public class AudioContentStore
 					
 			}
 			
-			// Map all the song genres to the indices of every specific song of that genre
+			// Map all the song genres to the indices of every specific song of that genre in contents ArrayList
 			songGenreMap = new HashMap<String, ArrayList<Integer>>();
 			for (int i = 0; i < Song.Genre.values().length; i++) {
-				ArrayList<Integer> indexArrayList = new ArrayList<Integer>(); // Creation of indexarraylist for each genre
+				ArrayList<Integer> indexArrayList = new ArrayList<Integer>(); // Creation of index ArrayList for each genre
 				Song.Genre genre = Song.Genre.values()[i]; // For each genre outlined in Songs class
 				try {
 					for (int j = 0; j < contents.size(); j++) { // iterate through the list to find matches to this genre
@@ -131,7 +117,7 @@ public class AudioContentStore
 			while (lineScanner.hasNextLine()) { // Used to end the scanning of the file
 				String type = lineScanner.nextLine(); // Indicates if a song or a book
 				switch (type) {
-				case Song.TYPENAME: // Collection of all constructor variables for song
+				case Song.TYPENAME: // Collection of all constructor variables for song, store.txt formatted to allow nextLine() calls
 					String id = lineScanner.nextLine();
 					String title = lineScanner.nextLine();
 					int year = lineScanner.nextInt();

@@ -10,32 +10,18 @@ import java.util.Map;
  */
 public class Library
 {
-	public ArrayList<Song> 			songs;  // Made this public so that it can be accessed in other files's methods
-	public ArrayList<AudioBook> 	audiobooks; // Made this public so that it can be accessed in other files's methods
+	public ArrayList<Song> 			songs;  
+	public ArrayList<AudioBook> 	audiobooks; 
 	private ArrayList<Playlist> 	playlists; 
 	
-  //private ArrayList<Podcast> 	podcasts;
-	
-	// Public methods in this class set errorMesg string 
-	// Error Messages can be retrieved from main in class MyAudioUI by calling  getErrorMessage()
-	// In assignment 2 we will replace this with Java Exceptions
-
 	public Library()
 	{
 		songs = new ArrayList<Song>(); 
 		audiobooks 	= new ArrayList<AudioBook>(); ;
 		playlists   = new ArrayList<Playlist>();
 	}
-	/*
-	 * Download audio content from the store. Since we have decided (design decision) to keep 3 separate lists in our library
-	 * to store our songs, podcasts and audiobooks (we could have used one list) then we need to look at the type of
-	 * audio content (hint: use the getType() method and compare to Song.TYPENAME or AudioBook.TYPENAME etc)
-	 * to determine which list it belongs to above
-	 * 
-	 * Make sure you do not add song/podcast/audiobook to a list if it is already there. Hint: use the equals() method
-	 * If it is already in a list, set the errorMsg string and return false. Otherwise add it to the list and return true
-	 * See the video
-	 */
+
+	// Allows you to download a piece of AudioContent
 	public void download(AudioContent content)
 	{
 		switch (content.getType()) { // Switch statement dependent on the type of content
@@ -43,7 +29,7 @@ public class Library
 			if (songs.contains(content)) { // If a song, check if already in songs. If so, return an error
 				throw new AlreadyDownloadedException("SONG " + content.getTitle() + " already downloaded"); // Throw this exception if song is already downloaded
 			}
-			songs.add((Song) content); // Else, cast it as a song, and add it to songs
+			songs.add((Song) content); // Else, cast it as a song, and add it to songs ArrayList simulating all the songs for a user
 			System.out.println("SONG " + content.getTitle() + " Added to Library");
 			break;
 		case AudioBook.TYPENAME:
@@ -56,7 +42,7 @@ public class Library
 			}
 	}
 	
-	// Print Information (printInfo()) about all songs in the array list
+	// Prints all the info of all downloaded songs
 	public void listAllSongs()
 	{
 		int index = 0;
@@ -69,7 +55,7 @@ public class Library
 		}
 	}
 	
-	// Print Information (printInfo()) about all audiobooks in the array list
+	// Lists info of all AudioBooks
 	public void listAllAudioBooks()
 	{
 		int index = 0;
@@ -81,8 +67,7 @@ public class Library
 		}
 	}
 	
-  // Print the name of all playlists in the playlists array list
-	// First print the index number as in listAllSongs() above
+	// Prints all playlists created by the user
 	public void listAllPlaylists()
 	{
 		int index = 0;
@@ -96,25 +81,22 @@ public class Library
   // Print the name of all artists. 
 	public void listAllArtists()
 	{
-		// First create a new (empty) array list of string 
-		// Go through the songs array list and add the artist name to the new arraylist only if it is
-		// not already there. Once the artist arraylist is complete, print the artists names
 		ArrayList<String> newArrayList = new ArrayList<String>();
-		for (int i = 0; i < songs.size(); i++) { // Populate the arraylist
+		for (int i = 0; i < songs.size(); i++) { 
 			if (!newArrayList.contains(songs.get(i).getArtist())) { // Add to newArrayList if newArrayList does not contain the artist (avoids duplicates)
-				newArrayList.add(songs.get(i).getArtist()); // Add artist
+				newArrayList.add(songs.get(i).getArtist()); 
 			}
 		}
 		
+		// Printing the artists to the console
 		int index = 0;
-		for (int j = 0; j < newArrayList.size(); j++ ) { // Printing newArrayList to the screen
+		for (int j = 0; j < newArrayList.size(); j++ ) { 
 			index += 1;
 			System.out.println(index + ". " + newArrayList.get(j));
 		}
 	}
 
-	// Delete a song from the library (i.e. the songs list) - 
-	// also go through all playlists and remove it from any playlist as well if it is part of the playlist
+	// Deletes a given song from library (Songs ArrayList) and any playlists made by the user
 	public void deleteSong(int index)
 	{
 		 if (index < 0 || index >= songs.size()) {
@@ -122,8 +104,8 @@ public class Library
 		 }
 		Song delSong = songs.get(index);
 		songs.remove(index); // Remove the specified song from songs
-		for (int i = 0; i < playlists.size(); i++) { // This loop gets the content for each playlist
-			ArrayList<AudioContent> currentContent = playlists.get(i).getContent(); 
+		for (int i = 0; i < playlists.size(); i++) { 
+			ArrayList<AudioContent> currentContent = playlists.get(i).getContent(); // get the playlist's contents
 			for (int j = 0; j < currentContent.size(); j++) { // This loop checks if the current playlist's content contains the to be deleted song, if it does, remove it.
 				if (currentContent.contains(delSong)) {
 					currentContent.remove(delSong);
@@ -135,12 +117,10 @@ public class Library
   //Sort songs in library by year
 	public void sortSongsByYear()
 	{
-		// Use Collections.sort() 
 		Collections.sort(songs, new SongYearComparator()); // Use comparator to sortbyyear
 	
 	}
-  // Write a class SongYearComparator that implements
-	// the Comparator interface and compare two songs based on year
+
 	private class SongYearComparator implements Comparator<Song>
 	{
 
@@ -149,14 +129,11 @@ public class Library
 		}
 	}
 		
-	// Sort songs by length
 	public void sortSongsByLength()
 	{	
 		Collections.sort(songs, new SongLengthComparator()); // Check SongLengthComparator to sort each song
-	 // Use Collections.sort() 
 	}
-  // Write a class SongLengthComparator that implements
-	// the Comparator interface and compare two songs based on length
+	
 	private class SongLengthComparator implements Comparator<Song>
 	{
 
@@ -166,13 +143,10 @@ public class Library
 		}
 
 	}
-	// Sort songs by title 
+	
 	public void sortSongsByName() // Sorts the songs arrayList
 	{
-	  // Use Collections.sort()
-		// class Song should implement the Comparable interface
-		// see class Song code
-		Collections.sort(songs); // Sort by the compareTo() method in the song file
+		Collections.sort(songs); 
 	}
 	
 	/*
@@ -199,21 +173,19 @@ public class Library
 		}
 		AudioBook audioBook = audiobooks.get(index-1);
 		if (chapter < 1 || chapter > audioBook.getChapters().size()) { // Check if adequate index, otherwise update error message to be printed to console
-			//errorMsg = "Chapter not found";
 			throw new NotFoundException("No such chapter found");
 		}
 		audioBook.selectChapter(chapter);
 		audioBook.play();
 	}
 	
-	// Print the chapter titles (Table Of Contents) of an audiobook
-	// see class AudioBook
+	// Prints AudioBook Table of Contents, see AudioBook for printTOC() function, does index bound checking
 	public void printAudioBookTOC(int index)
 	{	
 		if (index < 0 || index > audiobooks.size()) {
 			throw new IndexOutOfBoundsException("Invalid index for audiobook");
 		}
-		if (index >=0 && index <= audiobooks.size()) { // Check index
+		if (index >=0 && index <= audiobooks.size()) {
 			AudioBook audioBook = audiobooks.get(index-1);
 			audioBook.printTOC();
 		}
@@ -223,15 +195,14 @@ public class Library
    * Playlist Related Methods
    */
 	
-	// Make a new playlist and add to playlists array list
-	// Make sure a playlist with the same title doesn't already exist
+	// Make a new playlist and add to playlists array list making sure a playlist with the same name doesn't already exist
 	public void makePlaylist(String title)
 	{
-		Playlist newPlayList = new Playlist(title);
 		if (playlists.contains(newPlayList)) {
 			throw new AlreadyExistsException("Playlist " + title + " Already Exists"); // Throw this exception if the playlist already exists
 		}
 		else {
+			Playlist newPlayList = new Playlist(title);
 			playlists.add(newPlayList);
 		}
 	}
@@ -283,9 +254,7 @@ public class Library
 	}
 	
 	// Add a song/audiobook/podcast from library lists at top to a playlist
-	// Use the type parameter and compare to Song.TYPENAME etc
-	// to determine which array list it comes from then use the given index
-	// for that list
+	// Takes a string representing a type of AudioContent(Song, AudioBook), index in contents ArrayList (see AudioContentStore), and title of playlist to be matched
 	public void addContentToPlaylist(String type, int index, String playlistTitle)
 	{	
 		// Getting desired playlist to add content to
@@ -316,8 +285,7 @@ public class Library
 		}
 	}
 
-  // Delete a song/audiobook/podcast from a playlist with the given title
-	// Make sure the given index of the song/audiobook/podcast in the playlist is valid 
+ 	// Delete a song/audiobook/podcast from a playlist with the given title
 	public void delContentFromPlaylist(int index, String title)
 	{
 		if (!playlists.contains(new Playlist(title))) {
@@ -336,8 +304,10 @@ public class Library
 	/*
 	 * Implement map search functionality in audiocontentstore
 	 */
+
+	// Search for a title in contents, checking if that title exists, using the titleMap of AudioContentStore
 	public void search(String title) {
-		Map<String, Integer> titleMap = AudioContentStore.titleMap; // Access the map created in AudioContenStore
+		Map<String, Integer> titleMap = AudioContentStore.titleMap; // Access the map created in AudioContentStore
 		if(!titleMap.containsKey(title)) {
 			throw new NotFoundException("No matches for " + title); // If the title is non-existent in the map, throw this exception.
 		}
@@ -354,6 +324,7 @@ public class Library
 		}
 	}
 	
+	// Searches for all songs/audiobooks by an artist, printing the info of their materials
 	public void searcha(String artist) {
 		Map<String, ArrayList<Integer>> artistMap = AudioContentStore.artistMap; // Access map of indices
 		if (!artistMap.containsKey(artist)) {
@@ -381,6 +352,7 @@ public class Library
 		}
 	}
 	
+	// Searching by genre functionality through songgenreMap, printing out all relevant content
 	public void searchg(String genre) {
 		Map<String, ArrayList<Integer>> songGenreMappy = AudioContentStore.songGenreMap; // Access the appropriate map
 		if (!songGenreMappy.containsKey(genre)) {
@@ -396,7 +368,7 @@ public class Library
 		}
 	}
 	
-	// Have to throw these indices back to the function. Use download to download each index
+	// Downloads all works from an artist, returns indices that can be downloaded seperately in download function
 	public ArrayList<Integer> downloada(String artist) {
 		Map<String, ArrayList<Integer>> artistMappy = AudioContentStore.artistMap; // Access the artist map
 		if (!artistMappy.containsKey(artist)) {
@@ -406,6 +378,7 @@ public class Library
 		return artistIndices;
 	}
 	
+	// Download all songs of a specific genre, returning indices of songs of a specific genre. Each index can then be downloaded separately in UI
 	public ArrayList<Integer> downloadg(String genre) {
 		Map<String, ArrayList<Integer>> genreMappy = AudioContentStore.songGenreMap; // Access genre map
 		if (!genreMappy.containsKey(genre)) {
@@ -416,6 +389,7 @@ public class Library
 	}
 }
 
+// Custom exception classes
 class AlreadyDownloadedException extends RuntimeException {
 	public AlreadyDownloadedException() {}
 	public AlreadyDownloadedException(String message) {

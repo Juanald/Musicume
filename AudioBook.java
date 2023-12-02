@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 /*
  * An AudioBook is a type of AudioContent.
+ * It contains all the attributes of the AudioContent class, but with an author, narrator, a list of chapterTitles, a list of chapters, and a pointer to the current chapter.
  * It is a recording made available on the internet of a book being read aloud by a narrator
- * 
  */
 public class AudioBook extends AudioContent
 {
@@ -21,8 +21,7 @@ public class AudioBook extends AudioContent
 	public AudioBook(String title, int year, String id, String type, String audioFile, int length,
 									String author, String narrator, ArrayList<String> chapterTitles, ArrayList<String> chapters)
 	{
-		// Make use of the constructor in the super class AudioContent. 
-		// Initialize additional AudioBook instance variables. 
+		// Initializing additional AudioBook instance variables 
 		super(title, year, id, type, audioFile, length);
 		this.author = author;
 		this.narrator = narrator;
@@ -36,26 +35,21 @@ public class AudioBook extends AudioContent
 		return TYPENAME;
 	}
 
-  // Print information about the audiobook. First print the basic information of the AudioContent 
-	// by making use of the printInfo() method in superclass AudioContent and then print author and narrator
-	// see the video
+	// Prints information about the audiobook through the use of AudioContent printInfo() function, with author and narrator added
 	public void printInfo()
 	{
 		super.printInfo();
 		System.out.println( "Author: " + this.author + " Narrated by: " + this.narrator);
 	}
-	
-  // Play the audiobook by setting the audioFile to the current chapter title (from chapterTitles array list) 
-	// followed by the current chapter (from chapters array list)
-	// Then make use of the the play() method of the superclass
+
+	// Playing is done by setting the audioFile to the current chapter title, from chapterTitles arraylist, followed by chapter from chapters arraylist. Play() function called from superclass.
 	public void play() // Chapters
 	{
 		setAudioFile(chapterTitles.get(currentChapter) + "\n" + chapters.get(currentChapter));
 		super.play(); // Calling superclass to play audio file
 	}
 	
-	// Print the table of contents of the book - i.e. the list of chapter titles
-	// See the video
+	// Prints table of contents of book by looping over chapterTitles ArrayList
 	public void printTOC()
 	{
 		int index = 0;
@@ -65,7 +59,7 @@ public class AudioBook extends AudioContent
 		}
 	}
 
-	// Select a specific chapter to play - nothing to do here
+	// selects chapter with input checking for bounds
 	public void selectChapter(int chapter)
 	{
 		if (chapter >= 1 && chapter <= chapters.size())
