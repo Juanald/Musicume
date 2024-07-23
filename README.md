@@ -1,6 +1,6 @@
 # Text-Based-Music-App
 
-This is a simple text based music app I made as part of a class project.
+This is a simple text based music app.
 
 It reads the contents of store.txt into lists of either audiobooks or songs. From there, the user can search for, download, and delete songs/audiobooks as they see fit through the text based UI. Downloaded songs and audiobooks are stored in different lists, both available to the user to print contents, table of contents, specific chapters, lyrics, and even create customized playlists. These playlists can be named, printed to the screen, and modified.
 
